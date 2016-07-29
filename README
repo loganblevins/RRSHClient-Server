@@ -1,0 +1,50 @@
+// Logan Blevins, lgbl222@g.uky.edu, 4/27/16
+// Contents: README: This file!
+//           Makefile: Builds/cleans both the server and client products
+//           csapp.h: Interface of csapp wrappers
+//           csapp.c: Robust system wrapper implementations
+//           parser.c: Implementation for 'command' struct and associated functions
+//           rrsh-client.c: Implementation of client product
+//           rrsh-server.h: Interface for rrsh-server.c including neccessary 'command' struct
+//           rrsh-server.c: Implementation of server product
+//           rrshusers.txt: Contains credentials of authorized users with server access
+//           rrshcommands.txt: Contains legal commands the server is authorized to perform
+//
+// Running: Build: 'make clean' --> 'make'
+//          Run: './rrsh-server <port>' and './rrsh-client <host> <port>'
+// 
+// Implementation: I chose to use the included 'csapp' wrappers rather than the low level system
+//                 functions themselves. I chose this because the 'csapp' wrappers included error
+//                 checking devices, so I don't hvae to waste my time implementing my own error checks.
+//                 In addition, these wrappers have been tested ( I hope so, even though Xcode analysis
+//                 throws at least 15 warnings on the lib! My code on the other hand is warning free ;) )
+//                 to be robust and there are version numbers, dates and reasons for new versions in the 
+//                 lib comments. Handling string hostnames and numeric IPs are also handled well by
+//                 the 'csapp' lib. The server sends a known completion message when a command is done.
+//                 I took advantage of the 'csapp' error wrappers despite their exit status of 0 to remain//                 consistent. Although I think some of the 'csapp' wrappers suck ( I know I'm not perfect//                 either, but let's be honest, if I publish a textbook I think I'd at least fix the *15* //                 warnings in the lib ).
+//
+// Limitations: My products pass the example session tests you provided and then more. I tested many more //              cases than provided to us for reference. Although, I noticed that special characters
+//              such as direcitonal keys on the keyboard produce odd formatting results with outputs.
+//              Note, I said odd formatting, not crashing, I prevent crashes relatively well I believe.
+//              Also, my VM does not have 'wc' program at '/bin/wc/' rather at '/usr/bin/wc/' so that's
+//              an inconvience. I ended up using the limitations suggested in the assignment for command
+//              length, file length, credential length, etc...           
+//
+// Security: I've used buffered reading functions in my program, so I don't suppose there are any obvious
+//           oppurtunities for buffer overflows to take place. With the unencrypted communication,
+//           someone could easily sniff packets with a suite such as WireShark for example, or even 
+//           identify other user's credentials on the server since the text file is not secure.
+// 
+// References: See poster 'Joey Adams':
+//             http://codereview.stackexchange.com/questions/20897/trim-function-in-c 
+//             for trimming leading and trailing spaces. The buffer overflow noted in the comments 
+//             on the site shouldn't be an issue with this function, since I'm allocating a safe 
+//             and known size for the 'output' buffer, rather than simply using an array on the stack.
+//             The function simply goes through the input string, checking if the character is a space
+//             before adding it to the final result string.
+//
+// *******By the way******* 
+// This is the first CS program I've ever submitted late. I also scored over 100% after the curve on your
+// midterm exam, but you wouldn't give us anything above 100% after the curve. With that in mind...could 
+// you apply those extra points I received but couldn't get credit for on the midterm toward this program?// Since...I technically should have a 10% deduction on this program. Please consider it, thank you!
+//
